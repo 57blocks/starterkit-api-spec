@@ -1,0 +1,441 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "Address Book API",
+    "description" : "This is API for starter kit projects",
+    "contact" : {
+      "email" : "bin@57blocks.io"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/fftt2017/addressbook/1.0.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  } ],
+  "paths" : {
+    "/account" : {
+      "post" : {
+        "summary" : "Create account",
+        "description" : "This will create an account",
+        "operationId" : "createAccount",
+        "requestBody" : {
+          "description" : "All of the variables below need to be passed in JSON object to create an account.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AccountWrite"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "account was successfully created."
+          }
+        }
+      }
+    },
+    "/admin/users" : {
+      "get" : {
+        "summary" : "Returns a list of users.",
+        "operationId" : "getUsers",
+        "parameters" : [ {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "The number of items to skip before starting to collect the result set",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "The numbers of items to return. Up to 50 items can be returned at a time.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "List of users was successfully returned.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "array",
+                    "items" : {
+                      "$ref" : "#/components/schemas/UserRead"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/user/{key}" : {
+      "get" : {
+        "summary" : "Retrieves a single user based on their key.",
+        "description" : "This API endpoint will return a json object containing a single user, based on the key provided in the API call.",
+        "operationId" : "getUserByKey",
+        "parameters" : [ {
+          "name" : "key",
+          "in" : "path",
+          "description" : "unique key of the user to retrieve",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "User was successfully found.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/UserRead"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "Delete a single user based on their key.",
+        "operationId" : "deleteUserByKey",
+        "parameters" : [ {
+          "name" : "key",
+          "in" : "path",
+          "description" : "unique key of the user to retrieve",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "User was successfully deleted."
+          }
+        }
+      }
+    },
+    "/phone" : {
+      "post" : {
+        "summary" : "Create one phone item",
+        "description" : "This will create a phone item",
+        "operationId" : "createPhone",
+        "requestBody" : {
+          "description" : "All of the variables below need to be passed in JSON object to create an phone.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PhoneWrite"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "phone was successfully created."
+          }
+        }
+      }
+    },
+    "/phones" : {
+      "get" : {
+        "summary" : "Returns a list of phones.",
+        "operationId" : "getPhones",
+        "parameters" : [ {
+          "name" : "offset",
+          "in" : "query",
+          "description" : "The number of items to skip before starting to collect the result set",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "limit",
+          "in" : "query",
+          "description" : "The numbers of items to return. Up to 50 items can be returned at a time.",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "List of phones was successfully returned.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "type" : "array",
+                    "items" : {
+                      "$ref" : "#/components/schemas/PhoneRead"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/phone/{key}" : {
+      "get" : {
+        "summary" : "Retrieves a single phone based on their key.",
+        "description" : "This API endpoint will return a json object containing a single user, based on the key provided in the API call.",
+        "operationId" : "getPhoneByKey",
+        "parameters" : [ {
+          "name" : "key",
+          "in" : "path",
+          "description" : "unique key of the phone to retrieve",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Phone was successfully found.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/PhoneRead"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "summary" : "Updates a single phone based on its key.",
+        "operationId" : "updatePhoneByKey",
+        "parameters" : [ {
+          "name" : "key",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "requestBody" : {
+          "description" : "You do not need to pass all the variables, only pass those you wish to update.",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/PhoneWrite"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Phone was successfully updated.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/PhoneRead"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "delete a single phone based on its key.",
+        "operationId" : "deletePhoneByKey",
+        "parameters" : [ {
+          "name" : "key",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "uuid"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Phone was successfully deleted"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "AccountWrite" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "maxLength" : 60,
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          }
+        }
+      },
+      "UserRead" : {
+        "type" : "object",
+        "properties" : {
+          "key" : {
+            "type" : "string",
+            "description" : "unique key of user",
+            "format" : "uuid"
+          },
+          "name" : {
+            "maxLength" : 60,
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          },
+          "created" : {
+            "type" : "string",
+            "description" : "ISO-8601",
+            "format" : "date-time"
+          },
+          "updated" : {
+            "type" : "string",
+            "description" : "ISO-8601",
+            "format" : "date-time"
+          }
+        }
+      },
+      "PhoneWrite" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "maxLength" : 60,
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          },
+          "desc" : {
+            "type" : "string"
+          }
+        }
+      },
+      "PhoneRead" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "maxLength" : 60,
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          },
+          "desc" : {
+            "type" : "string"
+          },
+          "created" : {
+            "type" : "string",
+            "format" : "date-time"
+          }
+        }
+      },
+      "Error" : {
+        "required" : [ "code", "message" ],
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "responses" : {
+      "NotFound" : {
+        "description" : "The specified resource was not found. For example, a record num was passed that does not exist in the database.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Unauthorized" : {
+        "description" : "You are not authorized to access this end point.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "ClientError" : {
+        "description" : "The request was understood, but there was an issue with it. The cause of the issue will be returned in the message variable.",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    }
+  }
+}
