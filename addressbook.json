@@ -10,10 +10,10 @@
       "name" : "Apache 2.0",
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "version" : "1.0.0"
+    "version" : "1.1.0"
   },
   "servers" : [ {
-    "url" : "https://virtserver.swaggerhub.com/fftt2017/addressbook/1.0.0",
+    "url" : "https://virtserver.swaggerhub.com/fftt2017/addressbook/1.1.0",
     "description" : "SwaggerHub API Auto Mocking"
   } ],
   "paths" : {
@@ -84,7 +84,10 @@
               }
             }
           }
-        }
+        },
+        "security" : [ {
+          "OAuth2" : [ "admin" ]
+        } ]
       }
     },
     "/admin/user/{key}" : {
@@ -118,7 +121,10 @@
               }
             }
           }
-        }
+        },
+        "security" : [ {
+          "OAuth2" : [ "admin" ]
+        } ]
       },
       "delete" : {
         "summary" : "Delete a single user based on their key.",
@@ -139,7 +145,10 @@
           "200" : {
             "description" : "User was successfully deleted."
           }
-        }
+        },
+        "security" : [ {
+          "OAuth2" : [ "admin" ]
+        } ]
       }
     },
     "/phone" : {
@@ -162,7 +171,10 @@
           "201" : {
             "description" : "phone was successfully created."
           }
-        }
+        },
+        "security" : [ {
+          "OAuth2" : [ "write" ]
+        } ]
       }
     },
     "/phones" : {
@@ -209,7 +221,10 @@
               }
             }
           }
-        }
+        },
+        "security" : [ {
+          "OAuth2" : [ "read" ]
+        } ]
       }
     },
     "/phone/{key}" : {
@@ -243,7 +258,10 @@
               }
             }
           }
-        }
+        },
+        "security" : [ {
+          "OAuth2" : [ "read" ]
+        } ]
       },
       "put" : {
         "summary" : "Updates a single phone based on its key.",
@@ -284,7 +302,10 @@
               }
             }
           }
-        }
+        },
+        "security" : [ {
+          "OAuth2" : [ "write" ]
+        } ]
       },
       "delete" : {
         "summary" : "delete a single phone based on its key.",
@@ -304,7 +325,10 @@
           "200" : {
             "description" : "Phone was successfully deleted"
           }
-        }
+        },
+        "security" : [ {
+          "OAuth2" : [ "write" ]
+        } ]
       }
     }
   },
@@ -432,6 +456,22 @@
           "application/json" : {
             "schema" : {
               "$ref" : "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "OAuth2" : {
+        "type" : "oauth2",
+        "description" : "This API uses OAuth 2 with the implicit grant flow. [More info](https://api.example.com/docs/auth)",
+        "flows" : {
+          "implicit" : {
+            "authorizationUrl" : "https://api.example.com/oauth2/authorize",
+            "scopes" : {
+              "read" : "read your phones",
+              "write" : "modify your phones",
+              "admin" : "manage all users"
             }
           }
         }
